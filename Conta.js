@@ -1,4 +1,4 @@
-export class Conta{
+export class Conta {
     constructor(tipo, saldoInicial, cliente, agencia) {
         this._saldo = saldoInicial;
         this._cliente = cliente;
@@ -22,8 +22,14 @@ export class Conta{
 
     sacar(valor) {
         let taxa = 1;
-        if(this._tipo == "corrente"){
+        if (this._tipo == "corrente") {
             taxa = 1.1;
+        }
+        if (this._tipo == "salario") {
+            taxa = 1.05;
+        }
+        if (this._tipo == "empresarial") {
+            taxa = 1.15;
         }
         const valorSacado = taxa * valor;
         if (this._saldo >= valorSacado) {
@@ -40,7 +46,9 @@ export class Conta{
     }
 
     tranferir(valor, conta) {
-
+        if (this._tipo == "salario") {
+            return;
+        }
         const valorSacado = this.sacar(valor);
         conta.depositar(valorSacado);
 
